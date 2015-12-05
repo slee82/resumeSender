@@ -64,6 +64,9 @@
         console.log("Your name is: " + userName + " Your password is: " + password);
         alert("Your name is: " + userName + " Your password is: " + password);
         socket.emit('login',{u: userName, p:password});
+        socket.on('success', function(data) {
+          location.href = data.url;
+        })
       }
     </script>
 

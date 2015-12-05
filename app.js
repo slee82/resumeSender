@@ -2,6 +2,7 @@ var express = require('express')
 var app = express();
 var server = require('http').Server(app);
 var path = __dirname + '/public/';
+var path2 = __dirname = '/public/resumeMain';
 
 var io = require('socket.io')(server)
 
@@ -17,6 +18,7 @@ var dynamodbDoc = new AWS.DynamoDB.DocumentClient();
 app.use(express.static('public'));
 app.use(express.static('../../node_modules/bootstrap/'));
 app.use(express.static('socket.io'));
+app.use(express.static('public/resumeMain'));
 
 
 server.listen(8080);
