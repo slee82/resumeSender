@@ -35,11 +35,14 @@
 
     <div class="container">
     	<form class="form-register">
-    	<h3 class="form-register-heading">Please complete form to register</h3>
+    	<h3 class="form-register-heading">Please complete form</h3>
 
-    	<div class="form-register "><label for="id_username">Username</label><input type="text" name="username" id="id_username" class="form-control" /></div>
-    	<div class="form-register "><label for="id_password">Password</label><input type="password" name="password" id="id_password" class="form-control" /></div>
-    	<div class="form-register "><label for="id_confirm">Confirm Password</label><input type="password" name="confirm" id="id_confirm" class="form-control" /></div>
+    	<label for="id_username" class="sr-only">Username</label>
+    	<input type="text" name="username" id="id_username" class="form-control" placeholder="User Name" required autofocus>
+    	<label for="id_password" class="sr-only">Password</label>
+    	<input type="password" name="password" id="id_password" class="form-control" placeholder="Password" required autofocus>
+    	<label for="id_confirm" class="sr-only">Confirm Password</label>
+    	<input type="password" name="confirm" id="id_confirm" class="form-control" placeholder="Confirm Password" required autofocus>
     	<button class="btn btn-lg btn-primary btn-block" onclick = "submitFunction();" type="button">Submit</button>
     	
      
