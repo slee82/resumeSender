@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "aws-sdk": "^2.2.21",
     "bootstrap": "^3.3.6",
     "express": "^4.13.3",
     "forms": "^1.1.4"
