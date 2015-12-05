@@ -17,6 +17,7 @@ var validators = forms.validators;
 
 app.use(express.static('public'));
 app.use(express.static('../../node_modules/bootstrap/'));
+app.use(express.static('socket.io'));
 
 
 
@@ -73,6 +74,15 @@ var bootstrapField = function (name, object) {
     var label = object.labelHTML(name);
     var error = object.error ? '<div class="alert alert-error help-block">' + object.error + '</div>' : '';
 
+
+    var validationclass = object.value && !object.error ? 'has-success' : '';
+    validationclass = object.error ? 'has-error' : validationclass;
+
+    var widget = object.widget.toHTML(name, object);
+    return '<div class="form-group ' + validationclass + '">' + label + widget + error + '</div>';
+};
+
+
 io.on('connection', function(socket) {
     socket.on('login', function (data) {
         console.log(data.u);
@@ -83,15 +93,6 @@ io.on('connection', function(socket) {
     // socket.on('register', function (data) {
     // }):
 });
-
-    var validationclass = object.value && !object.error ? 'has-success' : '';
-    validationclass = object.error ? 'has-error' : validationclass;
-
-    var widget = object.widget.toHTML(name, object);
-    return '<div class="form-group ' + validationclass + '">' + label + widget + error + '</div>';
-};
-
-
 
 
 
