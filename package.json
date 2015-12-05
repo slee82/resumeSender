@@ -1,0 +1,10 @@
+{
+  "name": "resumeSender",
+  "description": "Sends resume and receives contact info",
+  "version": "0.0.1",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "express": "^4.13.3"
+  }
+}
