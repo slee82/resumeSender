@@ -2,7 +2,7 @@ var express = require('express')
 var app = express();
 var server = require('http').Server(app);
 var path = __dirname + '/public/';
-//var io = require('socket.io')(server)
+var io = require('socket.io')(server)
 
 
 
@@ -20,7 +20,16 @@ app.get('/', function(req, res) {
 });
 
 
+io.on('connection', function(socket) {
+    socket.on('login', function (data) {
+        console.log(data.u);
+        // console.log(data.p);
+        
+    });
 
+    // socket.on('register', function (data) {
+    // }):
+});
 
 
 
