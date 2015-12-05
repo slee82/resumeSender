@@ -25,7 +25,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/form', function(req, res) {
-    res.send(reg_form.toHTML(bootstrapField));
+    res.sendFile(path + 'form.html');
 })
 
 
