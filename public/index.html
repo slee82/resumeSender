@@ -47,7 +47,7 @@
           </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" onclick = "userlogin();" type="button">Sign in</button>
-        <button class="btn btn-lg btn-primary btn-block" onclick = "location.href = 'form.html';" type="register">Register</button>
+        <button class="btn btn-lg btn-primary btn-block" onclick = "location.href = 'form.html';" type="button">Register</button>
       </form>
 
     </div> <!-- /container -->
@@ -63,7 +63,7 @@
         var password = document.getElementById("inputPassword").value;
         console.log("Your name is: " + userName + " Your password is: " + password);
         alert("Your name is: " + userName + " Your password is: " + password);
-        socket.emit('login',{u: userName});
+        socket.emit('login',{u: userName, p:password});
       }
     </script>
 

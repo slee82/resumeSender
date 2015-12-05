@@ -40,7 +40,7 @@
     	<div class="form-register "><label for="id_username">Username</label><input type="text" name="username" id="id_username" class="form-control" /></div>
     	<div class="form-register "><label for="id_password">Password</label><input type="password" name="password" id="id_password" class="form-control" /></div>
     	<div class="form-register "><label for="id_confirm">Confirm Password</label><input type="password" name="confirm" id="id_confirm" class="form-control" /></div>
-    	<button class="btn btn-lg btn-primary btn-block" onclick = "submitFunction();" type="button">Submit Form</button>
+    	<button class="btn btn-lg btn-primary btn-block" onclick = "submitFunction();" type="button">Submit</button>
     	
      
 
@@ -53,11 +53,12 @@
     <script>
       function submitFunction(){
         var socket = io.connect();
-        var userName = document.getElementById("inputUserName").value;
-        var password = document.getElementById("inputPassword").value;
+        var userName = document.getElementById("id_username").value;
+        var password = document.getElementById("id_password").value;
         console.log("Your name is: " + userName + " Your password is: " + password);
         alert("Your name is: " + userName + " Your password is: " + password);
-        socket.emit('login',{u: userName});
+        socket.emit('register',{u: userName, p:password});
+        // window.location.href = "index.html";
       }
      </script>
 
