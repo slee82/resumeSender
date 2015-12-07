@@ -126,6 +126,7 @@ function authenticate(user_id,password,socket){
                  // console.log(" -", item.user_id + ": " + item.password);
             });
             if( !found ){
+                socket.emit('reply', {url: 'reindex.html'} )
                 console.log("Not found!");
             }
         }
