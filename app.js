@@ -41,24 +41,26 @@ io.on('connection', function(socket) {
         // authenticate(data.u, data.p);
         console.log(data.u);
         console.log(data.p);
-        authenticate(data.u, data.p);
+        authenticate(data.u, data.p,socket);
     });
 
     socket.on('register', function (data) {
     	console.log(data.u);
         console.log(data.p);
-    	addToDatabase(data.u, data.p);
+    	addToDatabase(data.u, data.p,data.n,data.e);
     });
 });
 
 
 
-function addToDatabase(user_id,password){
+function addToDatabase(user_id,password,name,email){
     var params = {
       TableName: "resumeSenderAccounts",
       Item: {
           "user_id": user_id,
-          "password": password
+          "password": password,
+          "name": name,
+          "email": email
       }
     };
 
@@ -97,7 +99,7 @@ function addToDatabase(user_id,password){
 
 
 
-function authenticate(user_id,password){
+function authenticate(user_id,password,socket){
     var params = {
         TableName : "resumeSenderAccounts",
         KeyConditionExpression: "#user_id = :ui",
@@ -119,6 +121,7 @@ function authenticate(user_id,password){
                 if(item.password === password){
                     console.log("Found match in database!");
                     found = true;
+                    socket.emit('reply', {url: 'resumeMain/index.html'} )
                 }
                  // console.log(" -", item.user_id + ": " + item.password);
             });
@@ -127,6 +130,8 @@ function authenticate(user_id,password){
             }
         }
     });
+
+
 }
 
 

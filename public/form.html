@@ -63,9 +63,11 @@
         var socket = io.connect();
         var userName = document.getElementById("id_username").value;
         var password = document.getElementById("id_password").value;
+        var name = document.getElementById("id_name").value;
+        var email = document.getElementById("id_email").value;
         console.log("Your name is: " + userName + " Your password is: " + password);
         alert("Your name is: " + userName + " Your password is: " + password);
-        socket.emit('register',{u: userName, p:password});
+        socket.emit('register',{u: userName, p:password, n:name, e: email});
         // window.location.href = "index.html";
       }
      </script>
