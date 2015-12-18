@@ -54,14 +54,14 @@ io.on('connection', function(socket) {
     socket.on('register', function (data) {
     	console.log(data.u);
         console.log(data.p);
-    	addToDatabase(data.u, data.p,data.n,data.e,data.t);
+    	addToDatabase(socket, data.u, data.p,data.n,data.e,data.t);
 
     });
 });
 
 
 // add user information into database
-function addToDatabase(user_id,password,name,email, type){
+function addToDatabase(socket, user_id,password,name,email, type){
     var params = {
       TableName: "resumeSenderAccounts",
       Item: {
