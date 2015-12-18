@@ -78,6 +78,10 @@
         console.log("Your name is: " + userName + " Your password is: " + password+" Type: "+type);
         //alert("Your name is: " + userName + " Your password is: " + password +" Type: "+type);
         socket.emit('register',{u: userName, p:password, n:name, e: email, t: type});
+        socket.on('reply', function(data) {
+          // go to new page with session ID 
+          window.location.href = data.url+'?'+data.session;
+        })
         //window.location.href = "index.html";
       }
      </script>
