@@ -54,21 +54,22 @@ io.on('connection', function(socket) {
     socket.on('register', function (data) {
     	console.log(data.u);
         console.log(data.p);
+    	addToDatabase(data.u, data.p,data.n,data.e,data.t);
 
-    	addToDatabase(data.u, data.p,data.n,data.e, data.t);
     });
 });
 
 
 // add user information into database
-function addToDatabase(user_id,password,name,email){
+function addToDatabase(user_id,password,name,email, type){
     var params = {
       TableName: "resumeSenderAccounts",
       Item: {
           "user_id": user_id,
           "password": password,
           "name": name,
-          "email": email
+          "email": email,
+          "type" : type
       }
     };
 
@@ -96,6 +97,7 @@ function addToDatabase(user_id,password,name,email){
                         console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
                     } else {
                         console.log("Data inserted successfully");
+                        socket.emit('reply', {url: 'reindex.html'})
                     }
                 });
             }
