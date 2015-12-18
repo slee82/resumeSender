@@ -89,7 +89,7 @@
             <div class="col-md-8">
                 <!-- <img class="img-responsive" src="http://placehold.it/750x500" alt=""> -->
 
-                <iframe id="mainWindow" src="https://s3.amazonaws.com/cloud2015project/resume3.pdf" width="100%"  frameborder="2" class="myIframe"></iframe>
+                <iframe id="mainWindow" src="https://s3.amazonaws.com/cloud2015project/resume3.pdf" frameborder="2" class="myIframe"></iframe>
             </div>
 
             <div class="col-md-4">
@@ -188,6 +188,8 @@
 
 
     <script type="text/javascript" language="javascript"> 
+
+        $('.myIframe').css('width', 0.5 * $(window).width()+'px');
         $('.myIframe').css('height', 0.5 * $(window).height()+'px');
     </script>
 
