@@ -58,6 +58,9 @@
                         <button onclick="myFunction()">Show URL</button>
                     </li>
 
+                     <li>
+                        <button onclick="getLocation()">Show Location</button>
+                    </li>
                     <li>
                         <p id="demo" style="color:white"></p>
                     </li>
@@ -165,7 +168,21 @@
             document.getElementById("demo").innerHTML = sessionID;
         }
     </script>
+    <script>
+		var x = document.getElementById("demo");
+		function getLocation() {
+		    if (navigator.geolocation) {
+		        navigator.geolocation.getCurrentPosition(showPosition);
+		    } else {
+		        x.innerHTML = "Geolocation is not supported by this browser.";
+		    }
+		}
+		function showPosition(position) {
+		    x.innerHTML = "Latitude: " + position.coords.latitude + 
+		    "<br>Longitude: " + position.coords.longitude; 
+		}
 
+	</script>
 
 </body>
 
