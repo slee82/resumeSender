@@ -33,15 +33,22 @@ app.get('/form', function(req, res) {
 })
 
 
-
+var globalUserInfo = []; 
 
 
 io.on('connection', function(socket) {
+    
     socket.on('login', function (data) {
-        // authenticate(data.u, data.p);
-        console.log(data.u);
-        console.log(data.p);
-        authenticate(data.u, data.p,socket);
+        console.log('User Name: ' + data.u);
+        console.log('Password: '  + data.p);
+        console.log('session ID: '+ data.s);
+        
+        globalUserInfo.push({
+        	sessionID: data.s,
+        	userName : data.u
+        });
+
+        authenticate(data.u, data.p, data.s, socket);
     });
 
     socket.on('register', function (data) {
@@ -52,7 +59,7 @@ io.on('connection', function(socket) {
 });
 
 
-
+// add user information into database
 function addToDatabase(user_id,password,name,email){
     var params = {
       TableName: "resumeSenderAccounts",
@@ -78,18 +85,16 @@ function addToDatabase(user_id,password,name,email){
         if (err) {
             console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
         } else {
-            console.log("Query succeeded.");
-            // console.log(data);
             if(data.Count > 0){
                 console.log("user id already exists!");
             }
             else {
-                console.log("Adding a new item...");
+                console.log("Adding a new item to databse...");
                 dynamodbDoc.put(params, function(err, data) {
                     if (err) {
                         console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
                     } else {
-                        console.log("Insert successfully");
+                        console.log("Data inserted successfully");
                     }
                 });
             }
@@ -98,8 +103,8 @@ function addToDatabase(user_id,password,name,email){
 }
 
 
-
-function authenticate(user_id,password,socket){
+// check if entered user information is valid
+function authenticate(user_id, password, sessionID, socket){
     var params = {
         TableName : "resumeSenderAccounts",
         KeyConditionExpression: "#user_id = :ui",
@@ -115,13 +120,13 @@ function authenticate(user_id,password,socket){
         if (err) {
             console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
         } else {
-            console.log("Query succeeded.");
             var found = false;
             data.Items.forEach(function(item) {
                 if(item.password === password){
-                    console.log("Found match in database!");
+                    console.log("Found matched profile in database!");
                     found = true;
-                    socket.emit('reply', {url: 'resumeMain/index.html'} )
+
+                    socket.emit('reply', {url: 'resumeMain/index.html', session: sessionID} )
                 }
                  // console.log(" -", item.user_id + ": " + item.password);
             });

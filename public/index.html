@@ -62,12 +62,16 @@
         var userName = document.getElementById("inputUserName").value;
         var password = document.getElementById("inputPassword").value;
         console.log("Your name is: " + userName + " Your password is: " + password);
-        alert("Your name is: " + userName + " Your password is: " + password);
-        socket.emit('login',{u: userName, p:password});
+        // alert("Your name is: " + userName + " Your password is: " + password);
+        
+        //generate a random number for session
+        var sessionID = parseInt(Math.random()*1000000);
+        
+        socket.emit('login',{u: userName, p:password, s:sessionID});
 
         socket.on('reply', function(data) {
-          window.location.href = data.url;
-          //console.log(data.url);
+          // go to new page with session ID 
+          window.location.href = data.url+'?'+data.session;
         })
       }
     </script>
