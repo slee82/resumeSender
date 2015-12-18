@@ -21,7 +21,7 @@ app.use(express.static('socket.io'));
 app.use(express.static('public/resumeMain'));
 
 
-server.listen(8080);
+server.listen(80);
 console.log("listening on Port: 80");
 
 app.get('/', function(req, res) {
@@ -54,7 +54,8 @@ io.on('connection', function(socket) {
     socket.on('register', function (data) {
     	console.log(data.u);
         console.log(data.p);
-    	addToDatabase(data.u, data.p,data.n,data.e);
+
+    	addToDatabase(data.u, data.p,data.n,data.e, data.t);
     });
 });
 
