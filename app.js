@@ -22,7 +22,7 @@ app.use(express.static('public/resumeMain'));
 
 
 server.listen(8080);
-console.log("listening on Port: 8080");
+console.log("listening on Port: 80");
 
 app.get('/', function(req, res) {
     res.sendFile(path + 'index.html');

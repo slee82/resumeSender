@@ -89,7 +89,8 @@
             <div class="col-md-8" style="overflow: scroll !important;-webkit-overflow-scrolling:touch !important;">
                 <!-- <img class="img-responsive" src="http://placehold.it/750x500" alt=""> -->
 
-                <iframe id="mainWindow" src="https://s3.amazonaws.com/cloud2015project/resume3.pdf" frameborder="0" scrolling="yes" class="myIframe"></iframe>
+                <iframe id="mainWindow" class="myIframe" src="https://s3.amazonaws.com/cloud2015project/resume3.pdf#view=fit&toolbar=0&navpanes=0" frameborder="0" scrolling="yes"  width="100%" style="height: 100vh;"></iframe>
+
             </div>
 
             <div class="col-md-4">
@@ -189,8 +190,8 @@
 
     <script type="text/javascript" language="javascript"> 
 
-        $('.myIframe').css('width', $(window).width()+'px');
-        $('.myIframe').css('height', 0.5 * $(window).height()+'px');
+         // $('.myIframe').css('width', $(window).width()+'px');
+         // $('.myIframe').css('height', 0.5 * $(window).height()+'px');
     </script>
 
     <script type="text/javascript">
@@ -201,6 +202,19 @@
             document.getElementById("FileName").innerHTML = x.src.split("/")[4];
         }
     </script>
+
+    
+    <script type="text/javascript">
+        function resizeIframe(id) {
+            var x = document.getElementById(id);
+            var newheight = document.getElementById(id).contentWindow.document .body.scrollHeight; 
+            var newwidth = document.getElementById(id).contentWindow.document .body.scrollWidth;
+            alert(newheight)
+            x.style.height = newheight + 'px';
+            x.style.width = newwidth + 'px';
+        }
+    </script>
+
 
 </body>
 
