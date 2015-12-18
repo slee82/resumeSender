@@ -75,7 +75,8 @@
         <!-- Portfolio Item Heading -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">File Name
+                <h1 class="page-header">
+                    <p id="FileName">File Name</p>
                     <!-- <small>File name</small> -->
                 </h1>
             </div>
@@ -88,7 +89,7 @@
             <div class="col-md-8">
                 <!-- <img class="img-responsive" src="http://placehold.it/750x500" alt=""> -->
 
-                <iframe src="https://s3.amazonaws.com/cloud2015project/resume3.pdf" width="100%"  class="myIframe"></iframe>
+                <iframe id="mainWindow" src="https://s3.amazonaws.com/cloud2015project/resume3.pdf" width="100%"  frameborder="2" class="myIframe"></iframe>
             </div>
 
             <div class="col-md-4">
@@ -115,25 +116,25 @@
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img class="img-responsive portfolio-item" src="http://placehold.it/500x300" alt="">
+                    <img id="window1" class="img-responsive portfolio-item" src="https://s3.amazonaws.com/cloud2015project/resume1.pdf" alt="" onclick="javascript:clickOnFiles(id)">
                 </a>
             </div>
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img class="img-responsive portfolio-item" src="http://placehold.it/500x300" alt="">
+                    <img id="window2" class="img-responsive portfolio-item" src="https://s3.amazonaws.com/cloud2015project/resume2.pdf" alt="" onclick="javascript:clickOnFiles(id)">
                 </a>
             </div>
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img class="img-responsive portfolio-item" src="http://placehold.it/500x300" alt="">
+                    <img id="window3" class="img-responsive portfolio-item" src="http://placehold.it/500x300" alt="">
                 </a>
             </div>
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img class="img-responsive portfolio-item" src="http://placehold.it/500x300" alt="">
+                    <img id="window4" class="img-responsive portfolio-item" src="http://placehold.it/500x300" alt="">
                 </a>
             </div>
 
@@ -168,6 +169,7 @@
             document.getElementById("demo").innerHTML = sessionID;
         }
     </script>
+
     <script>
 		var x = document.getElementById("demo");
 		function getLocation() {
@@ -187,6 +189,15 @@
 
     <script type="text/javascript" language="javascript"> 
         $('.myIframe').css('height', 0.5 * $(window).height()+'px');
+    </script>
+
+    <script type="text/javascript">
+        function clickOnFiles(id){
+            var x = document.getElementById(id);
+            document.getElementById("mainWindow").src = x.src
+            document.getElementById("mainWindow").contentWindow.location.reload()
+            document.getElementById("FileName").innerHTML = x.src.split("/")[4];
+        }
     </script>
 
 </body>
