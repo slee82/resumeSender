@@ -97,7 +97,8 @@ function addToDatabase(socket, user_id,password,name,email, type){
                         console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
                     } else {
                         console.log("Data inserted successfully");
-                        socket.emit('reply', {url: 'reindex.html'})
+                        socket.emit('reply', {url: 'index.html'});
+                        console.log("sent reindex url");
                     }
                 });
             }
