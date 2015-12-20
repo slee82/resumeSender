@@ -3,7 +3,7 @@ var s3 = new aws.S3();
 var fs = require('fs');
 var BUCKET_NAME = 'cloud2015project';
 
-var fileName = 'Assignment2.pdf';
+var fileName = 'cv.pdf';
 
 
 function getContentTypeByFile(fileName) {
