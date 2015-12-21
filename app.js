@@ -53,6 +53,10 @@ io.on('connection', function(socket) {
         authenticate(data.u, data.p, data.s, socket);
     });
 
+    socket.on('test', function (data) {
+        console.log(data);
+    });
+
     socket.on('register', function (data) {
     	console.log(data.u);
         console.log(data.p);
