@@ -2,9 +2,11 @@ var express = require('express')
 var app = express();
 var server = require('http').Server(app);
 var path = __dirname + '/public/';
-var path2 = __dirname = '/public/resumeMain';
-
+var path2 = __dirname + '/public/resumeMain';
+var fs = require('fs');
 var io = require('socket.io')(server)
+var ss = require('socket.io-stream');
+var pathFiles = require('path');
 
 var AWS = require("aws-sdk");
 
@@ -56,6 +58,14 @@ io.on('connection', function(socket) {
         console.log(data.p);
 
     	addToDatabase(data.u, data.p,data.n,data.e, data.t);
+    });
+
+    // for file uploads
+    ss(socket).on('file-upload', function(stream, data) {
+        console.log("got file: " +data.name);
+        var filename = pathFiles.basename(data.name);
+        stream.pipe(fs.createWriteStream(filename));
+        console.log("wrote file");
     });
 });
 
