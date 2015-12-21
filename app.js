@@ -55,6 +55,10 @@ io.on('connection', function(socket) {
 
     socket.emit('test',  {test: 'hello'});
 
+    socket.on('test', function (data) {
+        console.log(data);
+    });
+
     socket.on('register', function (data) {
     	console.log(data.u);
         console.log(data.p);
