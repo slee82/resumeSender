@@ -9,6 +9,8 @@ var ss = require('socket.io-stream');
 var pathFiles = require('path');
 
 var AWS = require("aws-sdk");
+var s3 = new aws.S3();
+var BUCKET_NAME = 'cloud2015project';
 
 AWS.config.update({
   region: "us-east-1",
@@ -70,10 +72,29 @@ io.on('connection', function(socket) {
     ss(socket).on('file-upload', function(stream, data) {
         console.log("got file: " +data.name);
         var filename = pathFiles.basename(data.name);
-        stream.pipe(fs.createWriteStream(filename));
+        var file = ''
+        //stream.pipe(fs.createWriteStream);
+        stream.pipe(file);
+        uploadFile(filename, file);
         console.log("wrote file");
     });
 });
+
+function uploadFile(fileName, fileBuffer) {
+    //var fileBuffer = fs.readFileSync(fileName);
+    //var metaData = getContentTypeByFile(fileName);
+
+    s3.putObject({
+        ACL: 'public-read',
+        Bucket: BUCKET_NAME,
+        Key: fileName,
+        Body: fileBuffer,
+        ContentType: 'pdf'
+    }, function(error, response) {
+        console.log('uploaded file[' + fileName + '] to [' + remoteFilename + '] as [' + metaData + ']');
+        console.log(arguments);
+    });
+}
 
 
 // add user information into database
