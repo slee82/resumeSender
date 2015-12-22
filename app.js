@@ -40,7 +40,8 @@ app.get('/form', function(req, res) {
 
 var globalUserInfo = []; 
 
-var clientSockets = {};
+var iosClientSockets = {};
+var webClientSockets = {};
 
 io.on('connection', function(socket) {
     var address = socket.handshake.address;
@@ -57,12 +58,13 @@ io.on('connection', function(socket) {
         	userName : data.u
         });
       
-        authenticate(data.u, data.p, data.s, socket, clientSockets[ip]);
+        authenticate(data.u, data.p, data.s, socket, iosClientSockets[ip]);
+        webClientSockets[ip] = socket;
     });
 
     socket.on('ios', function (data) {
         console.log('got iOS client');
-        clientSockets[ip] = socket;
+        iosClientSockets[ip] = socket;
         console.log(clientSockets[ip].handshake.address);
     })
 
@@ -84,11 +86,13 @@ io.on('connection', function(socket) {
 
     socket.on('sendToIOS', function(data) {
         console.log('sending url: '+data.url);
-        clientSockets[ip].emit('sendResume', {data: data.url});
+        iosClientSockets[ip].emit('sendResume', {data: data.url});
     });
 
     socket.on('receiveResume', function(data) {
         console.log('received from '+ data.id+ ' url: '+ data.url)
+        webClientSockets[ip].emit('newResume', {data: data.url});
+        console.log('sent new resume to client');
     });
 });
 

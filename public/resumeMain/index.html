@@ -106,7 +106,12 @@
                   // See the Configuring section to configure credentials in the SDK
                   
                    var socket = io.connect();
-                  
+                  	
+                   socket.on('newResume', function (data) {
+                   	  document.getElementById("mainWindow").src = data.url;
+                   	  conole.log("got newResume url: "+ data.url);
+                   });
+
                    socket.on('key', function (data) {
                    		console.log('got key');
                    		upload(data.k, data.s);
