@@ -33,37 +33,34 @@
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="icon-bar">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button> -->
+                </button>
                 <a class="navbar-brand" href="#" ><b>Resume Sender </b></a>
                 <a id='userInfo' class="navbar-brand" href="#" ></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <!-- <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li> -->
-
+                <div class="nav navbar-nav navbar-right">
                     <!-- <li>
                         <button onclick="myFunction()">Show URL</button>
                     </li>
 
-                     <li>
+                    <li>
                         <button onclick="getLocation()">Show Location</button>
                         <p id="demo" style="color:white"></p>
-                     </li> -->
-                </ul>
+                    </li> -->
+                    
+                    <button id='buttonInfo' class="btn btn-primary btn-lg disabled" type="button">
+                    <span class=""></span></button>
+                    
+                    <button type="button" class="btn btn-danger" onclick="logOut()">Log Out
+                    </button>
+                    
+                </div>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -224,9 +221,9 @@
     <script>
         
         var x = decodeURI(document.URL);
-        var sessionID = x.split("?")[1] + "(" + x.split("?")[2] + ")";
+        var sessionID = x.split("?")[1] + " (" + x.split("?")[2] + ")";
 
-        document.getElementById("userInfo").innerHTML = sessionID;
+        document.getElementById("buttonInfo").innerHTML = sessionID;
         
     </script>
 
@@ -273,6 +270,12 @@
             var socket = io.connect();
             socket.emit("sendToIOS", {url: x});
             // alert("resume is sent!")
+        }
+    </script>
+
+    <script type="text/javascript">
+        function logOut(){
+            window.location.href = '../index.html'
         }
     </script>
 </body>
