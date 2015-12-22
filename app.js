@@ -44,7 +44,9 @@ var clientSockets = new Array();
 
 io.on('connection', function(socket) {
     var address = socket.handshake.address;
+    var ip = address.split(':')[3];
     console.log(address);
+    console.log(ip);
     socket.on('login', function (data) {
         console.log('User Name: ' + data.u);
         console.log('Password: '  + data.p);
