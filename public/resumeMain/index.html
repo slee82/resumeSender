@@ -264,7 +264,7 @@
             var x = document.getElementById("mainWindow").src;
             var socket = io.connect();
             socket.emit("sendToIOS", {url: x});
-
+            alert("resume is sent!")
 
         }
     </script>
