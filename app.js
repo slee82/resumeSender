@@ -152,9 +152,10 @@ function authenticate(user_id, password, sessionID, socket, iosSocket){
                     found = true;
 
                     socket.emit('reply', {url: 'resumeMain/index.html', session: sessionID} )
-                    
-                    iosSocket.emit('uid', {user: user_id});
-                    console.log('sent uid: '+user_id);
+                    if (iosSocket !== 'undefined'){
+                        iosSocket.emit('uid', {user: user_id});
+                        console.log('sent uid: '+user_id);
+                    }
                 }
                  // console.log(" -", item.user_id + ": " + item.password);
             });
