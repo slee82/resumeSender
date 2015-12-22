@@ -65,7 +65,7 @@ io.on('connection', function(socket) {
     socket.on('ios', function (data) {
         console.log('got iOS client');
         iosClientSockets[ip] = socket;
-        console.log(clientSockets[ip].handshake.address);
+        console.log(iosClientSockets[ip].handshake.address);
     })
 
     socket.on('register', function (data) {
