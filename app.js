@@ -56,13 +56,14 @@ io.on('connection', function(socket) {
         	sessionID: data.s,
         	userName : data.u
         });
-        console.log('clientSockets.ip = '+clientSockets[ip].handshake.address);
-        authenticate(data.u, data.p, data.s, socket, clientSockets[ip]);
+        console.log('clientSockets.ip = '+clientSockets.ip.handshake.address);
+        authenticate(data.u, data.p, data.s, socket, clientSockets.ip);
     });
 
     socket.on('ios', function (data) {
         console.log('got iOS client');
         clientSockets.push({key: ip, value: socket});
+        console.log(clientSockets.ip.handshake.address);
     })
 
     socket.on('register', function (data) {
