@@ -269,15 +269,18 @@
     </script>
 
     <script type="text/javascript">
-      var socket = io.connect();
-                    
-                   socket.on('newResume', function (data) {
-                        alert("got newResume url: "+ data.url);
-                      document.getElementById("mainWindow").src = data.url;
-                      location.reload();
-                      // console.log("got newResume url: "+ data.url);
-                      
-                   });
+      
+       $(document).ready(function()){
+          var socket = io.connect();
+                        
+                       socket.on('newResume', function (data) {
+                            alert("got newResume url: "+ data.url);
+                          document.getElementById("mainWindow").src = data.url;
+                          location.reload();
+                          // console.log("got newResume url: "+ data.url);
+                          
+                       });
+               };
     </script>
 
     <script type="text/javascript">
