@@ -86,6 +86,10 @@ io.on('connection', function(socket) {
         console.log('sending url: '+data.url);
         clientSockets[ip].emit('sendResume', {data: data.url});
     });
+
+    socket.on('receiveResume' function(data) {
+        console.log('received from '+ data.id+ ' url: '+ data.url)
+    });
 });
 
 
