@@ -56,11 +56,12 @@ io.on('connection', function(socket) {
         	sessionID: data.s,
         	userName : data.u
         });
-
+        console.log('clientSockets.ip = '+clientSockets.ip);
         authenticate(data.u, data.p, data.s, socket, clientSockets.ip);
     });
 
     socket.on('ios', function (data) {
+        console.log(socket);
         clientSockets.push({key: ip, value: socket});
     })
 
