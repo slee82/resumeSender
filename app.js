@@ -83,7 +83,7 @@ io.on('connection', function(socket) {
     });
 
     socket.on('sendToIOS', function(data) {
-        clientSockets[socket.hadshake.address.split(':')[3]].emit('sendResume', data.url)
+        clientSockets[ip].emit('sendResume', data.url)
     });
 });
 
