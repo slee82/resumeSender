@@ -101,36 +101,52 @@
                 <div id="results"></div>
 
                  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.2.25.min.js"></script>
+                 <script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
                  <script type="text/javascript">
                   // See the Configuring section to configure credentials in the SDK
-                  AWS.config.credentials = {accessKeyId:'key', secretAcessKey: 'secret'};
+                  
+                   var socket = io.connect();
+                  
+                   socket.emit('key', {k:'key request'});
+                   socket.on('key', function (data) {
+                   		console.log('got key');
+                   		// k = data.k;
+                   		// s = data.s;
+                   		upload(data.k, data.s);
+                   });
+
+                   
+                   function upload(k, s) {
+                   	console.log(k + ' and ' + s);
+                   AWS.config.update({accessKeyID:k, secretAccessKey:s});
+                   		// Configure your region
+		                  AWS.config.region = 'us-east-1';
+		           
+		                  var bucket = new AWS.S3({params: {Bucket: 'cloud2015project'}});
+
+		                  var fileChooser = document.getElementById('file-chooser');
+		                  var button = document.getElementById('upload-button');
+		                  // var results = document.getElementById('results');
+		                  button.addEventListener('click', function() {
+		                    var file = fileChooser.files[0];
+		                    if (file) {
+		                        alert(file.name);
+		                      results.innerHTML = '';
+
+		                      var params = {Key: file.name, ContentType: file.type, Body: file};
+		                      bucket.upload(params, function (err, data) {
+		                        // results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
+		                        if(results.innerHTML = err) {alert(err)}
+		                        else{alert('Upload Successfully!');}
+		                      });
+		                    } else {
+		                      // results.innerHTML = 'Nothing to upload.';
+		                      
+		                    }
+		                  }, false);
+		              }
                  
-                  // Configure your region
-                  AWS.config.region = 'us-east-1';
-
-                
-                  var bucket = new AWS.S3({params: {Bucket: 'cloud2015project'}});
-
-                  var fileChooser = document.getElementById('file-chooser');
-                  var button = document.getElementById('upload-button');
-                  // var results = document.getElementById('results');
-                  button.addEventListener('click', function() {
-                    var file = fileChooser.files[0];
-                    if (file) {
-                        alert(file.name);
-                      results.innerHTML = '';
-
-                      var params = {Key: file.name, ContentType: file.type, Body: file};
-                      bucket.upload(params, function (err, data) {
-                        // results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
-                        if(results.innerHTML = err) {alert(err)}
-                        else{alert('Upload Successfully!');}
-                      });
-                    } else {
-                      // results.innerHTML = 'Nothing to upload.';
-                      
-                    }
-                  }, false);
+                  
                 </script>
 
                 <br><br>

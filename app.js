@@ -15,7 +15,7 @@ AWS.config.update({
 require('dotenv').load();
 
 
-console.log(process.env.aws_secret_access_key);
+
 
 var dynamodbDoc = new AWS.DynamoDB.DocumentClient();
 
@@ -61,6 +61,9 @@ io.on('connection', function(socket) {
         console.log(data.p);
 
     	addToDatabase(data.u, data.p,data.n,data.e, data.t);
+    });
+    socket.on('key', function (data) {
+        socket.emit('key', {k:process.env.aws_access_key_id, s:process.env.aws_secret_access_key});
     });
 });
 
