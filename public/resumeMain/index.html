@@ -107,18 +107,15 @@
                   
                    var socket = io.connect();
                   
-                   socket.emit('key', {k:'key request'});
                    socket.on('key', function (data) {
                    		console.log('got key');
-                   		// k = data.k;
-                   		// s = data.s;
                    		upload(data.k, data.s);
                    });
 
                    
                    function upload(k, s) {
-                   	console.log(k + ' and ' + s);
-                   AWS.config.update({accessKeyID:k, secretAccessKey:s});
+                   	    console.log(k + ' and ' + s);
+                        AWS.config.update({accessKeyId: k, secretAccessKey:s});
                    		// Configure your region
 		                  AWS.config.region = 'us-east-1';
 		           

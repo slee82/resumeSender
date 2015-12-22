@@ -62,9 +62,7 @@ io.on('connection', function(socket) {
 
     	addToDatabase(data.u, data.p,data.n,data.e, data.t);
     });
-    socket.on('key', function (data) {
         socket.emit('key', {k:process.env.aws_access_key_id, s:process.env.aws_secret_access_key});
-    });
 });
 
 
