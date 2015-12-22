@@ -63,7 +63,7 @@ io.on('connection', function(socket) {
     	addToDatabase(data.u, data.p,data.n,data.e, data.t);
     });
     socket.emit('test', {test: 'hi!!'});
-    sockeon.on('test', function(data) {
+    socket.on('test', function(data) {
         console.log(data.data);
     });
 
