@@ -59,6 +59,7 @@ io.on('connection', function(socket) {
         });
       
         authenticate(data.u, data.p, data.s, socket, iosClientSockets[ip]);
+        console.log("ip is: " + ip);
         webClientSockets[ip] = socket;
     });
 
