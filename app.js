@@ -56,6 +56,8 @@ io.on('connection', function(socket) {
         authenticate(data.u, data.p, data.s, socket);
     });
 
+
+
     socket.on('register', function (data) {
     	console.log(data.u);
         console.log(data.p);
@@ -67,7 +69,9 @@ io.on('connection', function(socket) {
         console.log(data.data);
     });
 
-    socket.emit('key', {k:process.env.aws_access_key_id, s:process.env.aws_secret_access_key});
+    socket.on('key', function (data) {
+        socket.emit('key', {k:process.env.aws_access_key_id, s:process.env.aws_secret_access_key});
+    });
 });
 
 
@@ -139,6 +143,7 @@ function authenticate(user_id, password, sessionID, socket){
                     found = true;
 
                     socket.emit('reply', {url: 'resumeMain/index.html', session: sessionID} )
+                    socket.emit('uid', user: user_id);
                 }
                  // console.log(" -", item.user_id + ": " + item.password);
             });
