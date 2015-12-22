@@ -95,7 +95,7 @@ io.on('connection', function(socket) {
         console.log(ip);
         console.log("this is valid: " + webClientSockets[ip].handshake.address);
         webClientSockets[ip].emit('newResume', {data: data.url});
-        console.log('sent new resume to client');
+        console.log('sent new resume to client at url: '+data.url);
     });
 });
 
