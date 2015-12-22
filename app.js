@@ -144,6 +144,7 @@ function authenticate(user_id, password, sessionID, socket){
 
                     socket.emit('reply', {url: 'resumeMain/index.html', session: sessionID} )
                     socket.emit('uid', {user: user_id});
+                    console.log('sent uid: '+user_id);
                 }
                  // console.log(" -", item.user_id + ": " + item.password);
             });
