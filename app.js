@@ -40,13 +40,13 @@ app.get('/form', function(req, res) {
 
 var globalUserInfo = []; 
 
-var clientSockets = new Array();
+var clientSockets = [];
 
 io.on('connection', function(socket) {
     var address = socket.handshake.address;
     var ip = address.split(':')[3];
-    console.log(address);
     console.log(ip);
+    
     socket.on('login', function (data) {
         console.log('User Name: ' + data.u);
         console.log('Password: '  + data.p);
@@ -57,10 +57,12 @@ io.on('connection', function(socket) {
         	userName : data.u
         });
 
-        authenticate(data.u, data.p, data.s, socket);
+        authenticate(data.u, data.p, data.s, socket, clientSockets.ip);
     });
 
-
+    socket.on('ios', function (data) {
+        clientSockets.push({key: ip, value: socket});
+    })
 
     socket.on('register', function (data) {
     	console.log(data.u);
@@ -125,7 +127,7 @@ function addToDatabase(user_id,password,name,email){
 
 
 // check if entered user information is valid
-function authenticate(user_id, password, sessionID, socket){
+function authenticate(user_id, password, sessionID, socket, iosSocket){
     var params = {
         TableName : "resumeSenderAccounts",
         KeyConditionExpression: "#user_id = :ui",
@@ -148,7 +150,7 @@ function authenticate(user_id, password, sessionID, socket){
                     found = true;
 
                     socket.emit('reply', {url: 'resumeMain/index.html', session: sessionID} )
-                    socket.emit('uid', {user: user_id});
+                    iosSocket.emit('uid', {user: user_id});
                     console.log('sent uid: '+user_id);
                 }
                  // console.log(" -", item.user_id + ": " + item.password);
