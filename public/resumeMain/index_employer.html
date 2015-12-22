@@ -104,14 +104,7 @@
                   // See the Configuring section to configure credentials in the SDK
                   
                    var socket = io.connect();
-                  	
-                   socket.on('newResume', function (data) {
-                        alert("got newResume url: "+ data.url);
-                   	  document.getElementById("mainWindow").src = data.url;
-                      location.reload();
-                   	  // console.log("got newResume url: "+ data.url);
-                      
-                   });
+                  
 
                    socket.on('key', function (data) {
                    		console.log('got key');
@@ -273,6 +266,18 @@
             socket.emit("sendToIOS", {url: x});
             // alert("resume is sent!")
         }
+    </script>
+
+    <script type="text/javascript">
+      var socket = io.connect();
+                    
+                   socket.on('newResume', function (data) {
+                        alert("got newResume url: "+ data.url);
+                      document.getElementById("mainWindow").src = data.url;
+                      location.reload();
+                      // console.log("got newResume url: "+ data.url);
+                      
+                   });
     </script>
 
     <script type="text/javascript">
