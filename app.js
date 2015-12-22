@@ -83,6 +83,7 @@ io.on('connection', function(socket) {
     });
 
     socket.on('sendToIOS', function(data) {
+        console.log('sending url');
         clientSockets[ip].emit('sendResume', data.url)
     });
 });
