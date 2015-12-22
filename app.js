@@ -93,7 +93,7 @@ io.on('connection', function(socket) {
     socket.on('receiveResume', function(data) {
         console.log('received from '+ data.id+ ' url: '+ data.url);
         console.log(ip);
-        console.log(webClientSockets[ip]);
+        console.log("this is valid: " + webClientSockets[ip].handshake.address);
         webClientSockets[ip].emit('newResume', {data: data.url});
         console.log('sent new resume to client');
     });
