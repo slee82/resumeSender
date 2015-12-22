@@ -56,7 +56,7 @@ io.on('connection', function(socket) {
         	sessionID: data.s,
         	userName : data.u
         });
-        console.log('clientSockets.ip = '+clientSockets.ip);
+        //console.log('clientSockets.ip = '+clientSockets.ip);
         authenticate(data.u, data.p, data.s, socket, clientSockets.ip);
     });
 
@@ -151,6 +151,7 @@ function authenticate(user_id, password, sessionID, socket, iosSocket){
                     found = true;
 
                     socket.emit('reply', {url: 'resumeMain/index.html', session: sessionID} )
+                    console.log(iosSocket.handshake.address);
                     iosSocket.emit('uid', {user: user_id});
                     console.log('sent uid: '+user_id);
                 }
