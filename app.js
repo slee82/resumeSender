@@ -164,11 +164,42 @@ function authenticate(user_id, password, sessionID, socket, iosSocket){
                     console.log("Found matched profile in database!");
                     found = true;
 
-                    socket.emit('reply', {url: 'resumeMain/index.html', session: sessionID} )
                     if (typeof iosSocket !== 'undefined'){
                         iosSocket.emit('uid', {user: user_id});
                         console.log('sent uid: '+user_id);
                     }
+
+
+                    var params = {
+                        TableName : "resumeSenderAccounts",
+                        // ProjectionExpression: "#user_id",
+                        KeyConditionExpression: "#uid = :user_id",  // retrieve tweets which has tweet_id greater than 0 (all tweets)
+                        ExpressionAttributeNames:{
+                            "#uid": "user_id",
+                        },
+                        ExpressionAttributeValues: {
+                            ":user_id": user_id
+                        }
+                    };
+
+                    dynamodbDoc.query(params, function(err, data) {
+                        if (err) {
+                            console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+                        } else {
+                            console.log("Query succeeded.");
+                            data.Items.forEach(function(item) {
+                                if(item.type === 'Employer Representative'){
+                                    socket.emit('reply', {url: 'resumeMain/index_employer.html', type: item.type, userId: user_id} )
+                                }
+                                else if(item.type === 'Prospective Employee'){
+                                    socket.emit('reply', {url: 'resumeMain/index_employee.html', type: item.type, userId: user_id} )
+                                }
+                            });
+                        }
+                    });
+
+                    // socket.emit('reply', {url: 'resumeMain/index.html', session: sessionID} )
+
                 }
                  // console.log(" -", item.user_id + ": " + item.password);
             });
@@ -178,8 +209,34 @@ function authenticate(user_id, password, sessionID, socket, iosSocket){
             }
         }
     });
+}
 
 
+
+function findAccountType(userId){
+
+    var params = {
+        TableName : "resumeSenderAccounts",
+        // ProjectionExpression: "#user_id",
+        KeyConditionExpression: "#uid = :user_id",  // retrieve tweets which has tweet_id greater than 0 (all tweets)
+        ExpressionAttributeNames:{
+            "#uid": "user_id",
+        },
+        ExpressionAttributeValues: {
+            ":user_id": userId
+        }
+    };
+
+    dynamodbDoc.query(params, function(err, data) {
+        if (err) {
+            console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Query succeeded.");
+            data.Items.forEach(function(item) {
+                console.log(" -", item.type );
+            });
+        }
+    });
 }
 
 

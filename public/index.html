@@ -71,7 +71,9 @@
 
         socket.on('reply', function(data) {
           // go to new page with session ID 
-          window.location.href = data.url;
+          alert("you are " + data.type);
+          // alert(typeof data.t ype)
+          window.location.href = data.url+"?"+data.userId + "?" + data.type;
         })
       }
     </script>
