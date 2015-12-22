@@ -9,7 +9,7 @@ var ss = require('socket.io-stream');
 var pathFiles = require('path');
 
 var AWS = require("aws-sdk");
-var s3 = new aws.S3();
+var s3 = new AWS.S3();
 var BUCKET_NAME = 'cloud2015project';
 
 AWS.config.update({
@@ -69,32 +69,57 @@ io.on('connection', function(socket) {
     });
 
     // for file uploads
+    var filename = ''
     ss(socket).on('file-upload', function(stream, data) {
         console.log("got file: " +data.name);
-        var filename = pathFiles.basename(data.name);
-        var file = ''
-        //stream.pipe(fs.createWriteStream);
-        stream.pipe(file);
-        uploadFile(filename, file);
-        console.log("wrote file");
+        filename = pathFiles.basename(data.name);
+        stream.pipe(fs.createWriteStream(filename));
+        console.log('wrote a file');
+        socket.emit('writeDone', {d: 'done'});
+        socket.on('writeDone', function(data) {
+            console.log('received done, ready to upload');
+            uploadFile(filename);
+        });    
     });
+    ss(socket).on('end', function () {
+        console.log("stream ended");
+        uploadFile(filename);
+    })
+
 });
 
-function uploadFile(fileName, fileBuffer) {
-    //var fileBuffer = fs.readFileSync(fileName);
-    //var metaData = getContentTypeByFile(fileName);
 
+function getContentTypeByFile(fileName) {
+    var rc = 'application/octet-stream';
+    var fn = fileName.toLowerCase();
+
+    if (fn.indexOf('.html') >= 0) rc = 'text/html';
+    // else if (fn.indexOf('.css') >= 0) rc = 'text/css';
+    // else if (fn.indexOf('.json') >= 0) rc = 'application/json';
+    // else if (fn.indexOf('.js') >= 0) rc = 'application/x-javascript';
+    else if (fn.indexOf('.png') >= 0) rc = 'image/png';
+    else if (fn.indexOf('.jpg') >= 0) rc = 'image/jpg';
+    else if (fn.indexOf('.pdf') >= 0) rc = 'pdf';
+
+    return rc;
+}
+
+function uploadFile(fileName) {
+    var fileBuffer = fs.readFileSync(fileName);
+    var metaData = getContentTypeByFile(fileName);
+    console.log('called uploadFile');
     s3.putObject({
         ACL: 'public-read',
         Bucket: BUCKET_NAME,
         Key: fileName,
         Body: fileBuffer,
-        ContentType: 'pdf'
+        ContentType: metaData
     }, function(error, response) {
-        console.log('uploaded file[' + fileName + '] to [' + remoteFilename + '] as [' + metaData + ']');
+        console.log('uploaded file[' + fileName +' as [' + metadata +' ]');
         console.log(arguments);
     });
-}
+    console.log('finished uploadFile');
+};
 
 
 // add user information into database

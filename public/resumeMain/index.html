@@ -117,6 +117,10 @@
                 			console.log(file.size);
                 			ss(socket).emit('file-upload', stream, {name:file.name, size: file.size});
                 			ss.createBlobReadStream(file).pipe(stream);
+                			socket.on('writeDone', function(data) {
+                				console.log('got writeDone');
+                				socket.emit('writeDone', {d: 'done'});
+                			});
                 		});
                 	});
                 </script>
