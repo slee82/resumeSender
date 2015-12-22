@@ -40,9 +40,11 @@ app.get('/form', function(req, res) {
 
 var globalUserInfo = []; 
 
+var clientSockets = new Array();
 
 io.on('connection', function(socket) {
-    
+    var address = socket.handshake.address;
+    console.log(address);
     socket.on('login', function (data) {
         console.log('User Name: ' + data.u);
         console.log('Password: '  + data.p);
@@ -64,6 +66,7 @@ io.on('connection', function(socket) {
 
     	addToDatabase(data.u, data.p,data.n,data.e, data.t);
     });
+    
     socket.emit('test', {test: 'hi!!'});
     socket.on('test', function(data) {
         console.log(data.data);
