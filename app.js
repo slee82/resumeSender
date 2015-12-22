@@ -61,7 +61,7 @@ io.on('connection', function(socket) {
     });
 
     socket.on('ios', function (data) {
-        console.log(socket);
+        console.log('got iOS client');
         clientSockets.push({key: ip, value: socket});
     })
 
@@ -151,7 +151,7 @@ function authenticate(user_id, password, sessionID, socket, iosSocket){
                     found = true;
 
                     socket.emit('reply', {url: 'resumeMain/index.html', session: sessionID} )
-                    console.log(iosSocket.handshake.address);
+                    
                     iosSocket.emit('uid', {user: user_id});
                     console.log('sent uid: '+user_id);
                 }
