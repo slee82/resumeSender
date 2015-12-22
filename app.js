@@ -143,7 +143,7 @@ function authenticate(user_id, password, sessionID, socket){
                     found = true;
 
                     socket.emit('reply', {url: 'resumeMain/index.html', session: sessionID} )
-                    socket.emit('uid', user: user_id);
+                    socket.emit('uid', {user: user_id});
                 }
                  // console.log(" -", item.user_id + ": " + item.password);
             });
