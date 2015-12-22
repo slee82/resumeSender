@@ -147,7 +147,7 @@
                 </script>
 
                 <br><br>
-                <button type="button" class="btn btn-success btn-lg">Send</button>
+                <button type="button" class="btn btn-success btn-lg" onclick="sendURL()">Send</button>
             </div>
 
                 
@@ -259,7 +259,15 @@
         }
     </script>
 
+    <script type="text/javascript">
+        function sendURL(){
+            var x = document.getElementById("mainWindow").src;
+            var socket = io.connect();
+            socket.emit("sendToIOS", {url: x});
 
+
+        }
+    </script>
 </body>
 
 </html>
