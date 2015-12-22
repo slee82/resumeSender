@@ -81,6 +81,10 @@ io.on('connection', function(socket) {
     socket.on('key', function (data) {
         socket.emit('key', {k:process.env.aws_access_key_id, s:process.env.aws_secret_access_key});
     });
+
+    socket.on('sendToIOS', function(data) {
+        clientSockets[socket.hadshake.address.split(':')[3]].emit('sendResume', data.url)
+    });
 });
 
 
