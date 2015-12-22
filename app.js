@@ -40,7 +40,7 @@ app.get('/form', function(req, res) {
 
 var globalUserInfo = []; 
 
-var clientSockets = [];
+var clientSockets = {};
 
 io.on('connection', function(socket) {
     var address = socket.handshake.address;
@@ -62,8 +62,8 @@ io.on('connection', function(socket) {
 
     socket.on('ios', function (data) {
         console.log('got iOS client');
-        clientSockets.push({key: ip, value: socket});
-        console.log(clientSockets.ip.handshake.address);
+        clientSockets[ip] = socket;
+        console.log(clientSockets[ip].handshake.address);
     })
 
     socket.on('register', function (data) {
