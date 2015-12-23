@@ -129,7 +129,7 @@
 		                    if (file) {
 		                        alert(file.name);
 		                      results.innerHTML = '';
-                              var fileName = x.split('?')[1] + '-' + file.name;
+                              var fileName = decodeURI(document.URL).split('?')[1] + '-' + file.name;
 		                      var params = {Key: fileName, ContentType: file.type, Body: file};
 		                      bucket.upload(params, function (err, data) {
 		                        // results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
