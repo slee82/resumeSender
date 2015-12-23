@@ -84,6 +84,9 @@ io.on('connection', function(socket) {
     
     socket.emit('key', {k:process.env.aws_access_key_id, s:process.env.aws_secret_access_key});
     
+    socket.on('resumeSNS', function (data) {
+        publishSNS(data.s);
+    })
 
     socket.on('sendToIOS', function(data) {
         console.log('sending url: '+data.url);
