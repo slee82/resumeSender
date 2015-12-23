@@ -281,7 +281,7 @@
                     alert("got newResume url: "+ data.url);
                     document.getElementById("mainWindow").src = data.url;
                     // console.log("got newResume url: "+ data.url);
-                      
+                    document.getElementById("FileName").innerHTML = data.url.split("/")[4];
                    });
                });
     </script>
