@@ -1,0 +1,6 @@
+{
+    "TopicArn": "arn:aws:sns:us-east-1:275512981344:newResumeSNS",
+    "QueueUrl": "https://sqs.us-east-1.amazonaws.com/275512981344/newResume",
+    "QueueArn": "arn:aws:sqs:us-east-1:275512981344:newResume"
+}
+
