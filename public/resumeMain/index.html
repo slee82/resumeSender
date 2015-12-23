@@ -137,7 +137,7 @@
 		                        // results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
 		                        if(results.innerHTML = err) {alert(err)}
 		                        else{
-                                    socket.emit('resumeSNS', {s: 'https://s3.amazonaws.com/cloud2015project/' + file.name});
+                                    socket.emit('resumeSNS', {s: 'https://s3.amazonaws.com/cloud2015project/' + fileName});
                                     alert('Upload Successfully!');
                                 }
 		                      });
