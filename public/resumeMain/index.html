@@ -57,6 +57,9 @@
                     <button id='buttonInfo' class="btn btn-primary btn-lg disabled" type="button">
                     <span class=""></span></button>
                     
+                    <button type="button" class="btn btn-danger" onclick="refresh()">refresh
+                    </button>
+
                     <button type="button" class="btn btn-danger" onclick="logOut()">Log Out
                     </button>
                     
@@ -289,6 +292,12 @@
     <script type="text/javascript">
         function logOut(){
             window.location.href = '../index.html'
+        }
+    </script>
+
+    <script type="text/javascript">
+        function refresh(){
+            location.reload();
         }
     </script>
 </body>
