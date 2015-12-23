@@ -219,6 +219,7 @@ function authenticate(user_id, password, sessionID, socket, iosSocket){
                                 // else if(item.type === 'Prospective Employee'){
                                 //     socket.emit('reply', {url: 'resumeMain/index_employee.html', type: item.type, userId: user_id} )
                                 // }
+                                console.log(user_id, item.type)
                                 getUserFile(user_id, item.type, socket);
                                 //socket.emit('reply', {url: 'resumeMain/index.html', type: item.type, userId: user_id} )
                             });
@@ -271,7 +272,7 @@ function findAccountType(userId){
 
 function getUserFile(uid, utype, socket){
     
-
+   // console.log("in get user file")
     var myBucket = new S3Bucket( {
           key: process.env.aws_access_key_id 
         , secret: process.env.aws_secret_access_key
@@ -286,28 +287,38 @@ function getUserFile(uid, utype, socket){
 
     var handleListResult = function( err, list, next ){
         if ( err ) log.trace( err );
+        
         else {
-        var fileList = []
+            var fileList = []
 
-        // console.log( list );
-        for(var i=0;i<list.length; i++){
-            if((list[i].key).indexOf(uid) > -1){
-                fileList.push('https://s3.amazonaws.com/cloud2015project/'+list[i].key);
-                if (i+1 > 4){
-                    break;
+            for(var i=0;i<list.length; i++){
+
+                // console.log(list[i].key)
+                if((list[i].key).indexOf(uid) > -1){
+                    fileList.push('https://s3.amazonaws.com/cloud2015project/'+list[i].key);
+                    if (i+1 > 4){
+                        break;
+                    }
                 }
+                    
+            }
+            console.log(utype, uid)
+            var fileListText = ''
+            for(var j=0;j<fileList.length;j++){
+                fileListText += "?" + fileList[j]
+            }
+            console.log(fileListText)
+            socket.emit('reply', {url: 'resumeMain/index.html', type: utype, userId: uid, files: fileListText} );
+            // get the next 1'000 items if available
+            // if( next ) next( handleListResult );
                 
+            // }
         }
 
-        socket.emit('reply', {url: 'resumeMain/index.html', type: utype, userId: uid, files: fileList} );
-        // get the next 1'000 items if available
-        // if( next ) next( handleListResult );
-            
-        // }
-    };
+    
 
+    }
     myBucket.list( 'r' , handleListResult );
-
 }
 
 
