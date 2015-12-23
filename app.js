@@ -60,7 +60,7 @@ io.on('connection', function(socket) {
       
         authenticate(data.u, data.p, data.s, socket, iosClientSockets[ip]);
         console.log("ip is: " + ip);
-        webClientSockets[ip] = socket;
+        //webClientSockets[ip] = socket;
     });
 
     socket.on('ios', function (data) {
@@ -74,6 +74,7 @@ io.on('connection', function(socket) {
         console.log(data.p);
 
     	addToDatabase(data.u, data.p,data.n,data.e, data.t);
+        //webClientSockets[ip] = socket;
     });
     
     socket.emit('test', {test: 'hi!!'});
@@ -86,13 +87,18 @@ io.on('connection', function(socket) {
     
     socket.on('resumeSNS', function (data) {
         publishSNS(data.s);
+        webClientSockets[ip] = socket;
     })
 
     socket.on('sendToIOS', function(data) {
         console.log('sending url: '+data.url);
+        webClientSockets[ip] = socket;
         iosClientSockets[ip].emit('sendResume', {data: data.url});
     });
 
+    socket.on('waiting', function (data) {
+        webClientSockets[ip] = socket;
+    })
     socket.on('receiveResume', function(data) {
         console.log('received from '+ data.id+ ' url: '+ data.url);
         console.log(ip);
