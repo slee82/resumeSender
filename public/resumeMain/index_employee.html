@@ -143,7 +143,10 @@
 		                      bucket.upload(params, function (err, data) {
 		                        // results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
 		                        if(results.innerHTML = err) {alert(err)}
-		                        else{alert('Upload Successfully!');}
+		                        else{
+                                    socket.emit('resumeSNS', {s: 'https://s3.amazonaws.com/cloud2015project/' + file.name});
+                                    alert('Upload Successfully!');
+                                }
 		                      });
 		                    } else {
 		                      // results.innerHTML = 'Nothing to upload.';
