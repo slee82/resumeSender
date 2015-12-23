@@ -97,7 +97,7 @@
                 <button type="button" class="btn btn-default btn-md" onclick=""><input type="file" id="file-chooser" /> </button>
                 <button id="upload-button" class="btn btn-primary btn-md">Upload to S3</button>
                 <div id="results"></div>
-
+                 <script type="text/javascript"> var x = decodeURI(document.URL); </script>
                  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.2.25.min.js"></script>
                  <script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
                  <script type="text/javascript">
@@ -128,7 +128,6 @@
 		                    if (file) {
 		                        alert(file.name);
 		                      results.innerHTML = '';
-                              var x = decodeURI(document.URL);
                               var fileName = x.split('?')[1] + '-' + file.name;
 		                      var params = {Key: fileName, ContentType: file.type, Body: file};
 		                      bucket.upload(params, function (err, data) {
