@@ -66,9 +66,9 @@
                     
                     <button id='buttonInfo' class="btn btn-primary btn-lg disabled" type="button">
                     <span class=""></span></button>
-<form class="navbar-brand "><input type="text" class="form-control" placeholder="Try Java or C++.."></form>
-                    
-                   
+                   <input id="searchField" type="text" class="form-control" placeholder="Try Java or C++..">
+                    <button type="button" class="btn btn-success" onclick="findCandidates()">Search</button>
+
                     <button type="button" class="btn btn-danger" onclick="logOut()">Log Out</button>
                 </div>
             </div>
@@ -90,7 +90,7 @@
             </div>
         </div>
         <!-- /.row -->
-        
+
         <!-- Portfolio Item Row -->
         <div class="row">
 
@@ -316,8 +316,21 @@
     </script>
 
     <script type="text/javascript">
-        function logOut(){
-            window.location.href = '../index.html'
+        function findCandidates(){
+           var x =  (document.getElementById("searchField").value)
+            var socket2 = io.connect();
+          socket2.emit('search', {u: x});
+
+          socket2.on('searchResult', function(data){
+            var len = data.r.length;
+            console.log(data.r)
+            document.getElementById("mainWindow").src = data.r[0];
+            for(var i = 1; i< len; i++){
+                if(i>4) break;
+                var windowName = "window"+i;
+                document.getElementById(windowName).src = data.r[i];
+            }
+          })
         }
     </script>
 </body>
