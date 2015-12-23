@@ -131,8 +131,9 @@
 		                    if (file) {
 		                        alert(file.name);
 		                      results.innerHTML = '';
-
-		                      var params = {Key: file.name, ContentType: file.type, Body: file};
+                              var x = decodeURI(document.URL);
+                              var fileName = x.split('?')[1] + '-' + file.name;
+		                      var params = {Key: fileName, ContentType: file.type, Body: file};
 		                      bucket.upload(params, function (err, data) {
 		                        // results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
 		                        if(results.innerHTML = err) {alert(err)}
@@ -222,9 +223,9 @@
     <script>
         
         var x = decodeURI(document.URL);
-        var sessionID = x.split("?")[1] + " (" + x.split("?")[2] + ")";
+        var userInfo = x.split("?")[1] + " (" + x.split("?")[2] + ")";
 
-        document.getElementById("buttonInfo").innerHTML = sessionID;
+        document.getElementById("buttonInfo").innerHTML = useInfo;
         
     </script>
 
