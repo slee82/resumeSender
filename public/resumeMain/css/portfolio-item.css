@@ -36,8 +36,8 @@ footer {
 }
 
 .col-md-8{
-	width: 100%;
-        overflow: scroll;
-        white-space: nowrap;
+	width: 1px;
+        min-width: 100%;
+        *width: 100%;
         
 }
