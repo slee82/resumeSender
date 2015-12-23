@@ -56,9 +56,6 @@
                     
                     <button id='buttonInfo' class="btn btn-primary btn-lg disabled" type="button">
                     <span class=""></span></button>
-                    
-                    <button type="button" class="btn btn-danger" onclick="refresh()">refresh
-                    </button>
 
                     <button type="button" class="btn btn-danger" onclick="logOut()">Log Out
                     </button>
@@ -279,13 +276,13 @@
       
        $(document).ready(function(){
           var socket2 = io.connect();
-                alert("socket2"); 
+          socket2.emit('waiting', {u: 'update'});
+                // alert("socket2"); 
                    socket2.on('newResume', function (data) {
                     alert("got newResume url: "+ data.url);
                     document.getElementById("mainWindow").src = data.url;
-                    location.reload();
                     // console.log("got newResume url: "+ data.url);
-                      
+                    document.getElementById("FileName").innerHTML = data.url.split("/")[4];
                    });
                });
     </script>
@@ -293,12 +290,6 @@
     <script type="text/javascript">
         function logOut(){
             window.location.href = '../index.html'
-        }
-    </script>
-
-    <script type="text/javascript">
-        function refresh(){
-            location.reload();
         }
     </script>
 </body>
