@@ -74,7 +74,6 @@ io.on('connection', function(socket) {
         console.log(data.p);
 
     	addToDatabase(data.u, data.p,data.n,data.e, data.t);
-        //webClientSockets[ip] = socket;
     });
     
     socket.emit('test', {test: 'hi!!'});
