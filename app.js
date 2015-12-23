@@ -3,7 +3,7 @@ var app = express();
 var server = require('http').Server(app);
 var path = __dirname + '/public/';
 var path2 = __dirname = '/public/resumeMain';
-
+var config = require('./config.json');
 var io = require('socket.io')(server)
 
 var AWS = require("aws-sdk");
@@ -14,7 +14,7 @@ AWS.config.update({
 
 require('dotenv').load();
 
-
+var sns = new AWS.SNS();
 
 
 var dynamodbDoc = new AWS.DynamoDB.DocumentClient();
@@ -81,9 +81,9 @@ io.on('connection', function(socket) {
         console.log(data.data);
     });
 
-    socket.on('key', function (data) {
-        socket.emit('key', {k:process.env.aws_access_key_id, s:process.env.aws_secret_access_key});
-    });
+    
+    socket.emit('key', {k:process.env.aws_access_key_id, s:process.env.aws_secret_access_key});
+    
 
     socket.on('sendToIOS', function(data) {
         console.log('sending url: '+data.url);
@@ -98,6 +98,18 @@ io.on('connection', function(socket) {
         console.log('sent new resume to client at url: '+data.url);
     });
 });
+
+
+// publish sns to sqs
+function publishSNS(mesg) {
+  var publishParams = {
+    TopicArn : config.TopicArn,
+    Message: mesg
+  };
+  sns.publish(publishParams, function(err, data) {
+    process.stdout.write("published to newResume topic\n");
+  });
+}
 
 
 // add user information into database
