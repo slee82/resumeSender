@@ -317,7 +317,7 @@
 
     <script type="text/javascript">
         function findCandidates(){
-           var x =  (document.getElementById("searchField").value)
+           var x =  (document.getElementById("searchField").value.toLowerCase())
             var socket2 = io.connect();
           socket2.emit('search', {u: x});
 
