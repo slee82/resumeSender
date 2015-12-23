@@ -206,12 +206,13 @@ function authenticate(user_id, password, sessionID, socket, iosSocket){
                         } else {
                             console.log("Query succeeded.");
                             data.Items.forEach(function(item) {
-                                if(item.type === 'Employer Representative'){
-                                    socket.emit('reply', {url: 'resumeMain/index_employer.html', type: item.type, userId: user_id} )
-                                }
-                                else if(item.type === 'Prospective Employee'){
-                                    socket.emit('reply', {url: 'resumeMain/index_employee.html', type: item.type, userId: user_id} )
-                                }
+                                // if(item.type === 'Employer Representative'){
+                                //     socket.emit('reply', {url: 'resumeMain/index_employer.html', type: item.type, userId: user_id} )
+                                // }
+                                // else if(item.type === 'Prospective Employee'){
+                                //     socket.emit('reply', {url: 'resumeMain/index_employee.html', type: item.type, userId: user_id} )
+                                // }
+                                socket.emit('reply', {url: 'resumeMain/index.html', type: item.type, userId: user_id} )
                             });
                         }
                     });
