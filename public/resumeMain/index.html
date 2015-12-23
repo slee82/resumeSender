@@ -166,19 +166,19 @@
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img id="window1" class="img-responsive portfolio-item" src="https://s3.amazonaws.com/cloud2015project/resume1.pdf" alt="" onclick="javascript:clickOnFiles(id)">
+                    <img id="window1" class="img-responsive portfolio-item" src="http://placehold.it/500x300" alt="" onclick="javascript:clickOnFiles(id)">
                 </a>
             </div>
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img id="window2" class="img-responsive portfolio-item" src="https://s3.amazonaws.com/cloud2015project/resume2.pdf" alt="" onclick="javascript:clickOnFiles(id)">
+                    <img id="window2" class="img-responsive portfolio-item" src="http://placehold.it/500x300" alt="" onclick="javascript:clickOnFiles(id)">
                 </a>
             </div>
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img id="window3" class="img-responsive portfolio-item" src="https://s3.amazonaws.com/cloud2015project/resume3.pdf" alt="" onclick="javascript:clickOnFiles(id)">
+                    <img id="window3" class="img-responsive portfolio-item" src="http://placehold.it/500x300" alt="" onclick="javascript:clickOnFiles(id)">
                 </a>
             </div>
 
@@ -223,6 +223,13 @@
         var userInfo = x.split("?")[1] + " (" + x.split("?")[2] + ")";
 
         document.getElementById("buttonInfo").innerHTML = userInfo;
+
+        var urlCount = x.split("?").length - 3;
+        for(var i = 1; i<= urlCount; i++){
+            var windowName = "window"+i;
+            document.getElementById(windowName).src = x.split("?")[2+i];
+
+        }
         
     </script>
 
