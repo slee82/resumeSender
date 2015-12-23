@@ -108,49 +108,9 @@
                    userID = x.split('?')[1];
                    socket.on('key', function (data) {
                    		console.log('got key');
-                        getUserFile(userID, data.k, data.s);
                    		upload(data.k, data.s);
                    });
 
-                   function getUserFile(uid, k, s){
-                        var S3Bucket = require( "ee-aws-s3-bucket" );
-
-                        var myBucket = new S3Bucket( {
-                              key: k
-                            , secret: s
-                            , bucket: "cloud2015project"
-                            , maxConcurrent: 10 // generic limit, overrrides the default of 10
-                            , maxConcurrentDownloads: 100 // limit to 100 concurrent downloads, overrides the generic limit
-                            , maxConcurrentUploads: 50 // limit to 50 concurrent uploads, overrides the generic limit
-                            , maxConcurrentDeletes: 200 // limit to 200 concurrent deletes, overrides the generic limit
-                            , maxConcurrentLists: 5 // limit to 5 concurrent lists, overrides the generic limit
-                        });
-
-
-                        var handleListResult = function( err, list, next ){
-                            if ( err ) log.trace( err );
-                            else {
-                            var fileList = []
-
-                            // console.log( list );
-                            for(var i=0;i<list.length; i++){
-                                if((list[i].key).indexOf(uid) > -1){
-                                    //fileList.push('https://s3.amazonaws.com/cloud2015project/'+list[i].key);
-                                    if (i+1 > 4){
-                                        break;
-                                    }
-                                    document.getElementById("window"+(i+1)).src = 'https://s3.amazonaws.com/cloud2015project/'+list[i].key;
-                                }
-                            }
-                            // get the next 1'000 items if available
-                            if( next ) next( handleListResult );
-                                
-                            }
-                        };
-
-                        myBucket.list( 'r' , handleListResult );
-
-                    }
 
                    
                    function upload(k, s) {
@@ -262,7 +222,7 @@
         var x = decodeURI(document.URL);
         var userInfo = x.split("?")[1] + " (" + x.split("?")[2] + ")";
 
-        document.getElementById("buttonInfo").innerHTML = useInfo;
+        document.getElementById("buttonInfo").innerHTML = userInfo;
         
     </script>
 
