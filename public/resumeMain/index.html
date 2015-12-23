@@ -228,9 +228,10 @@
 
         var urlCount = x.split("?").length - 3;
         for(var i = 1; i<= urlCount; i++){
+            if(i>4){break;}
             var windowName = "window"+i;
-            document.getElementById(windowName).src = x.split("?")[2+i];
-
+            var fileUrl = 'https://s3.amazonaws.com/cloud2015project/'+ x.split("?")[2+i]
+            document.getElementById(windowName).src = fileUrl;
         }
         
     </script>

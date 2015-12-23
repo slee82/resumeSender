@@ -295,14 +295,16 @@ function getUserFile(uid, utype, socket){
 
                 // console.log(list[i].key)
                 if((list[i].key).indexOf(uid) > -1){
-                    fileList.push('https://s3.amazonaws.com/cloud2015project/'+list[i].key);
+                    // fileList.push('https://s3.amazonaws.com/cloud2015project/'+list[i].key);
+                    console.log("ironman!!" + list[i].key)
+                    fileList.push(list[i].key);
                     if (i+1 > 4){
                         break;
                     }
                 }
                     
             }
-            console.log(utype, uid)
+            // console.log(utype, uid)
             var fileListText = ''
             for(var j=0;j<fileList.length;j++){
                 fileListText += "?" + fileList[j]
