@@ -97,6 +97,7 @@ io.on('connection', function(socket) {
 
     socket.on('waiting', function (data) {
         webClientSockets[ip] = socket;
+        console.log("client watiting for resume");
     })
     socket.on('receiveResume', function(data) {
         console.log('received from '+ data.id+ ' url: '+ data.url);
