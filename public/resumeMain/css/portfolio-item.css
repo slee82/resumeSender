@@ -34,3 +34,10 @@ footer {
     margin: auto;
   height:100%;
 }
+
+.col-md-8{
+	width: 100%;
+        overflow: scroll;
+        white-space: nowrap;
+        
+}
