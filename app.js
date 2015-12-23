@@ -8,6 +8,7 @@ var io = require('socket.io')(server)
 
 var AWS = require("aws-sdk");
 var S3Bucket = require( "ee-aws-s3-bucket" );
+var s3 = new AWS.S3();
 
 AWS.config.update({
   region: "us-east-1",
@@ -88,6 +89,8 @@ io.on('connection', function(socket) {
     socket.on('resumeSNS', function (data) {
         publishSNS(data.s);
         webClientSockets[ip] = socket;
+        getUserFile3(data.uid, socket);
+        
     })
 
     socket.on('sendToIOS', function(data) {
@@ -220,7 +223,7 @@ function authenticate(user_id, password, sessionID, socket, iosSocket){
                                 //     socket.emit('reply', {url: 'resumeMain/index_employee.html', type: item.type, userId: user_id} )
                                 // }
                                 console.log(user_id, item.type)
-                                getUserFile(user_id, item.type, socket);
+                                getUserFile2(user_id, item.type, socket);
                                 //socket.emit('reply', {url: 'resumeMain/index.html', type: item.type, userId: user_id} )
                             });
                         }
@@ -321,6 +324,78 @@ function getUserFile(uid, utype, socket){
 
     }
     myBucket.list( 'r' , handleListResult );
+}
+
+function getUserFile2(uid, utype, socket){
+
+    var params = {
+      Bucket: 'cloud2015project', /* required */
+      Delimiter: '',
+      EncodingType: 'url',
+      Marker: '',
+      MaxKeys: 100,
+      Prefix: ''
+    };
+    s3.listObjects(params, function(err, data) {
+      if (err) {
+        console.log(err, err.stack); // an error occurred
+      }
+      else{
+        var fileList = []
+
+        for(var i = 0; i<data.Contents.length; i++){
+              if(fileList.length === 4) break;
+              if((data.Contents[i].Key).indexOf(uid)>-1){
+                fileList.push(data.Contents[i].Key);
+              }
+        }
+        var fileListText = ''
+        for(var j=0;j<fileList.length;j++){
+            fileListText += "?" + fileList[j]
+        }
+        console.log(fileListText)
+            socket.emit('reply', {url: 'resumeMain/index.html', type: utype, userId: uid, files: fileListText} );
+   
+
+
+      }
+    });
+
+}
+
+function getUserFile3(uid, socket){
+
+    var params = {
+      Bucket: 'cloud2015project', /* required */
+      Delimiter: '',
+      EncodingType: 'url',
+      Marker: '',
+      MaxKeys: 100,
+      Prefix: ''
+    };
+    s3.listObjects(params, function(err, data) {
+      if (err) {
+        console.log(err, err.stack); // an error occurred
+      }
+      else{
+        var fileList = []
+
+        for(var i = 0; i<data.Contents.length; i++){
+          if(fileList.length === 3) break;
+          if((data.Contents[i].Key).indexOf(uid)>-1){
+            fileList.push(data.Contents[i].Key);
+          }
+        }
+        var fileListText = ''
+        for(var j=0;j<fileList.length;j++){
+            fileListText += "?" + fileList[j]
+        }
+        console.log(fileListText)
+            
+        socket.emit('updateRest', {files: fileListText} );
+      }
+    });
+
 }
 
 

@@ -137,8 +137,19 @@
 		                        // results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
 		                        if(results.innerHTML = err) {alert(err)}
 		                        else{
-                                    socket.emit('resumeSNS', {s: 'https://s3.amazonaws.com/cloud2015project/' + fileName});
+                                    socket.emit('resumeSNS', {s: 'https://s3.amazonaws.com/cloud2015project/' + fileName, uid: decodeURI(document.URL).split('?')[1]});
+                                    document.getElementById("FileName").innerHTML = fileName;
+                                    document.getElementById("mainWindow").src = 'https://s3.amazonaws.com/cloud2015project/' + fileName;
+
+                                    document.getElementById("window1").src = 'https://s3.amazonaws.com/cloud2015project/' + fileName;
+
                                     alert('Upload Successfully!');
+                                    socket.on("updateRest", function (data) {
+                                        for(var i=1; i<= data.files.length; i++){
+                                            var windowName = "window"+(i+1);
+                                             document.getElementById(windowName).src = 'https://s3.amazonaws.com/cloud2015project/' + data.files.split("?")[i];
+                                        }
+                                    });
                                 }
 		                      });
 		                    } else {
